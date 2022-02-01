@@ -38,7 +38,13 @@ browserOpen.then(function(browserObj){
 	let waitFor3Seconds = page.waitFor(3000) // waitFor inbuilt function
 	return waitFor3Seconds;
 }).then(function(){
-	let allChallengesPromise = page.$$() // $$ -> document.querySelectorAll short Form
+	// $$ -> document.querySelectorAll short Form
+	let allChallengesPromise = page.$$('.ui-btn.ui-btn-normal.primary-cta.ui-btn-line-primary.ui-btn-styled', {delay:50}) 
+	return allChallengesPromise;
+}).then(function(questionsArr){
+	console.log("num of question inside warmup",questionsArr.length);
+	let questionWillBeSolved = questionSolver(questionsArr[0]);
+	return questionWillBeSolved
 })
 
 // Whenever we move from one page to another. this function makes sure that we perform the further desired
@@ -55,6 +61,16 @@ function waitAndClick(selector,cPage){
 			resolve();
 		}).catch(function(){
 			reject(); 
+		})
+	})
+}
+
+function questionSolver(question){
+
+	return new Promise(function(resolve,reject){
+		let questionWillBeClicked = question.click();
+		questionWillBeClicked.then(function(){
+			let EditorInFocus
 		})
 	})
 }
