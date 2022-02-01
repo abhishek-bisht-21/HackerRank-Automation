@@ -106,6 +106,24 @@ function questionSolver(page,question,answer){
 		}).then(function(){
 			let mainEditorInFocus = waitAndClick('.monaco-editor.no-user-select.vs', page)
 			return mainEditorInFocus;
+		}).then(function(){
+			let ctrlIsPressed = page.keyboard.down('Control') // down is for holding it
+			return ctrlIsPressed;
+		}).then(function(){
+			let AIsPressed = page.keyboard.press('A', {delay:300}) // selecting the code at once
+			return AIsPressed;
+		}).then(function(){
+			let VisPressed = page.keyboard.press('V',{delay:300}) // pasting the code
+			return VisPressed;
+		}).then(function(){
+			let ctrlIsUnpressed = page.keyboard.up('Control') // Releasing ctrl
+			return ctrlIsUnpressed
+		}).then(function(){
+			return page.click('.hr-monaco__run-code',{delay:100})
+		}).then(function(resolve,reject){
+			resolve();
+		}).catch(function(err){
+			reject();
 		})
 	})
 }
